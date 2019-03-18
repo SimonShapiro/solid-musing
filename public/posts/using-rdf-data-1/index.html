@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Solid Musings  | Using RDF data from other apps - 1</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.54.0" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.955516233bcafa4d2a1c13cea63c7b50.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+
+    <meta property="og:title" content="Using RDF data from other apps - 1" />
+<meta property="og:description" content="Encouraging widespread use of the solid platform has some challenges. These range from perceived difficulty of using data in rdf to represent data, to inexperience with the solid server itself. This article is not a backgrounder on rdf or solid; rather I want to deal with the challenge of using rdf and the re-use of data.
+While solid&rsquo;s persistence paradigm is document oriented rather than store or &lsquo;database&rsquo; oriented. Using the document is not as easy as &lsquo;file open&rsquo; and &lsquo;file save&rsquo; semantics." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://solid.woburnadvisory.co.uk:8443/posts/using-rdf-data-1/" />
+<meta property="article:published_time" content="2019-03-11T07:51:03&#43;00:00"/>
+<meta property="article:modified_time" content="2019-03-11T07:51:03&#43;00:00"/>
+
+<meta itemprop="name" content="Using RDF data from other apps - 1">
+<meta itemprop="description" content="Encouraging widespread use of the solid platform has some challenges. These range from perceived difficulty of using data in rdf to represent data, to inexperience with the solid server itself. This article is not a backgrounder on rdf or solid; rather I want to deal with the challenge of using rdf and the re-use of data.
+While solid&rsquo;s persistence paradigm is document oriented rather than store or &lsquo;database&rsquo; oriented. Using the document is not as easy as &lsquo;file open&rsquo; and &lsquo;file save&rsquo; semantics.">
+
+
+<meta itemprop="datePublished" content="2019-03-11T07:51:03&#43;00:00" />
+<meta itemprop="dateModified" content="2019-03-11T07:51:03&#43;00:00" />
+<meta itemprop="wordCount" content="1232">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Using RDF data from other apps - 1"/>
+<meta name="twitter:description" content="Encouraging widespread use of the solid platform has some challenges. These range from perceived difficulty of using data in rdf to represent data, to inexperience with the solid server itself. This article is not a backgrounder on rdf or solid; rather I want to deal with the challenge of using rdf and the re-use of data.
+While solid&rsquo;s persistence paradigm is document oriented rather than store or &lsquo;database&rsquo; oriented. Using the document is not as easy as &lsquo;file open&rsquo; and &lsquo;file save&rsquo; semantics."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://solid.woburnadvisory.co.uk:8443/" class="f3 fw2 hover-white no-underline white-90 dib">
+      Solid Musings
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        POSTS
+      </p>
+      <h1 class="f1 athelas mb1">Using RDF data from other apps - 1</h1>
+      
+      <time class="f6 mv4 dib tracked" datetime="2019-03-11T07:51:03Z">March 11, 2019</time>      
+      
+      
+    </header>
+
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+
+<p>Encouraging widespread use of the solid platform has some challenges.  These range from perceived difficulty of using data in rdf to represent data, to inexperience with the solid server itself.  This article is not a backgrounder on rdf or solid; rather I want to deal with the challenge of using rdf and the re-use of data.</p>
+
+<p>While solid&rsquo;s persistence paradigm is document oriented rather than store or &lsquo;database&rsquo; oriented.  Using the document is not as easy as &lsquo;file open&rsquo; and &lsquo;file save&rsquo; semantics.</p>
+
+<h2 id="1-why-is-rdf-difficult-to-use">1. Why is rdf difficult to use?</h2>
+
+<p>RDF was originally an XML based format making it very hard for humans to read.  See the example below:</p>
+
+<pre><code>&lt;?xml version=&quot;1.0&quot;?&gt;
+
+&lt;rdf:RDF xmlns:rdf=&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot; xmlns:cd=&quot;http://www.recshop.fake/cd#&quot;&gt;
+
+&lt;rdf:Description rdf:about=&quot;http://www.recshop.fake/cd/Empire-Burlesque&quot;&gt;
+  &lt;cd:artist&gt;Bob Dylan&lt;/cd:artist&gt;
+  &lt;cd:country&gt;USA&lt;/cd:country&gt;
+  &lt;cd:company&gt;Columbia&lt;/cd:company&gt;
+  &lt;cd:price&gt;10.90&lt;/cd:price&gt;
+  &lt;cd:year&gt;1985&lt;/cd:year&gt;
+&lt;/rdf:Description&gt;
+
+&lt;/rdf:RDF&gt;
+
+&lt;/xml&gt;
+</code></pre>
+
+<p>Nowadays there are formats like turtle and json-ld that are easy to write and read.  Json-ld is just json, while turtle is as easy to read (for me) as yaml.  Below is the translation of the rdf-xml into turtle format:</p>
+
+<pre><code>@prefix cd: &lt;http://www.recshop.fake/cd#&gt; .
+
+&lt;http://www.recshop.fake/cd/Empire-Burlesque&gt; 
+    cd:artist &quot;Bob Dylan&quot;;
+    cd:price &quot;10.90&quot;;
+    cd:country &quot;USA&quot;;
+    cd:company &quot;Columbia&quot;;
+    cd:year &quot;1985&quot;.
+</code></pre>
+
+<p>Other than the <code>@prefix</code> there is not a lot of difference between this and a yaml file.  However there are few use cases where you would want to craft data by hand.  In the next section we look at some of the ways to interact with turtle as data.</p>
+
+<h2 id="2-some-usage-considerations">2. Some usage considerations.</h2>
+
+<p>There are many libraries for reading rdf documents.  I won&rsquo;t go into any details about these.  Most of the javascript clients and servers are based on <code>rdfjs</code>.  The solid &lsquo;browser&rsquo; is based on rdflibjs, one of the most well used libraries.</p>
+
+<p><img src="example1.png" alt="screenshot" /></p>
+
+<p>The screenshot above, shows the data presented in the solid &lsquo;browser&rsquo;.  There are a number of observations I want to make about the screenshot, not to be critical, but to tease out some of the design issues we need to confront.</p>
+
+<h3 id="2-1-iris-are-ugly">2.1 IRIs are ugly</h3>
+
+<p>The purpose of the <code>@prefix</code> is to make the balance of the turtle file easier to read.  However, when the data is in memory (or in a triple-store), the 1st triple would be:</p>
+
+<p><code>&lt;http://www.recshop.fake/cd/Empire-Burlesque&gt; &lt;http://www.recshop.fake/cd#artist&gt; &quot;Bob Dylan&quot; .</code></p>
+
+<p>The challenge in any user interface is to get this raw form onto the screen in as meaningful way as possible.  As you can see from the screenshot, only the last part of the subject, predicate, object are used: Empire-Burlesque, artist, &ldquo;Bob Dylan&rdquo;.  In addition, the hyphen in Empire-Burlesque is removed to make it read &ldquo;Empire Burlesque&rdquo;.</p>
+
+<p>As in most software projects there is a trade-off between the specific and the general. The solid &lsquo;browser&rsquo; has chosen to be general and adopt this kind of alogrithm to support the almost infinite range of data that it needs to represent.  If you needed other languages or more complex forms you would need something else here.</p>
+
+<h3 id="2-2-control-over-order">2.2 Control over order</h3>
+
+<p>Notice that in the turtle snippet above &lsquo;price&rsquo; comes before &lsquo;country&rsquo;, yet in the screenshot the predicates are listed in alphabetical order.  Another clear design choice.  There are a couple of issues here.  First, if the document were just that, the order chosen by the author should be respected.  Second, if the document is just a means of persisting the data until it is in memory. Absent of other information, alphabetical is about the only way to go.</p>
+
+<p>So the question is, how do we inform general purpose clients of the true intent of the author?</p>
+
+<h2 id="3-data-re-use">3. Data re-use</h2>
+
+<p>Usually, there is a close-coupling between an application and the data format chosen by the application authors.  The authors of the application choose the format (and persistance mechanism) for the data and either allow others to interact with the format by publishing it or regards it as their &lsquo;secret sauce&rsquo; and do everything they can to prevent other applications from using it.</p>
+
+<p>Rdf, on the other hand, is a totally open machine and human readable format.  So it represents a fantastic opportunity for data re-use in different applications.  But just having data in a human and machine readable format is not enough.</p>
+
+<p>Standard vocabularies like friend of a friend (foaf), dublin core(dc), owl, rdf, rdfs, and so on, go some way to encouraging re-use because they provide a meaning system to tagged data.  Consider this bookmark produced by the Markbooks app:</p>
+
+<pre><code>@prefix terms: &lt;http://purl.org/dc/terms/&gt;.
+@prefix bookm: &lt;http://www.w3.org/2002/01/bookmark#&gt;.
+@prefix n0: &lt;http://xmlns.com/foaf/0.1/&gt;.
+@prefix c: &lt;/profile/card#&gt;.
+@prefix you: &lt;https://youtu.be/&gt;.
+
+&lt;&gt; terms:references &lt;#0.056127920957769306&gt; .
+        
+&lt;#0.056127920957769306&gt;
+    a bookm:Bookmark;
+    terms:created &quot;2019-02-14T06:14:55.926Z&quot;^^XML:dateTime;
+    terms:title &quot;Open Artificial Pancreas&quot;;
+    bookm:recalls you:p76hGxv3-HE;
+    n0:maker c:me.
+</code></pre>
+
+<p>By making reference to the standard vocabularies listed in <code>@prefix</code>, I can get the definition of each of the terms a take a look at other related items from the chosen vocabulary.  Let&rsquo;s now take a look at some of the re-use use cases.</p>
+
+<h3 id="3-1-same-data-new-ui">3.1 Same data, new UI</h3>
+
+<p>In this case we want to use the data as prepared but in a new UI setting.  Say to display the last 10 bookmarks in a moving ticker at the bottom of a home page. Armed with the turtle file and the vocabulary, it is relatively straightforward to use the data in a different UI.</p>
+
+<h3 id="3-2-a-new-editor">3.2 A new editor</h3>
+
+<p>Editing the data is a small step-up from just viewing the data differently.  However, if we wanted to be able to add new bookmarks, we would need to be able to mimic the identification of bookmarks within the document or keep to a different document.  The fragments seem to be from a random number generator, but Markbooks haven&rsquo;t gone out of their way to explain this and it isn&rsquo;t in the vocabulary.  There are risk of clashes for people who user both applications.</p>
+
+<h3 id="3-3-extending-the-functionality">3.3 Extending the functionality</h3>
+
+<p>How might one craft an application that builds on the data and functionality?  For example by adding topic tags.</p>
+
+<p>If we are careful, rdf extends quite easily. If we added the following, we would be able add a topic, which is part of the <code>bookm:</code> vocabulary.</p>
+
+<pre><code>&lt;#OpenSource&gt; a bookm:Topic;
+    terms:title &quot;My Open Source Collection&quot;;
+    bookm:leadsTo &lt;#0.056127920957769306&gt; .
+
+&lt;#0.056127920957769306&gt; bookm:hasTopic &lt;#OpenSource&gt; .
+</code></pre>
+
+<p>We would also need to decide whether to add this information in the original document or some other document and ensure that both are loaded at the same time.</p>
+
+<p>A key question is how do apps communicate the data they are expecting or creating?</p>
+
+<h1 id="4-moving-towards-a-solution">4. Moving towards a solution</h1>
+
+<p>So far we have highlighted a number of design issues that need careful consideration in order to reduce the friction and reluctance by developers to get involved with rdf data.  These can be summarized as:</p>
+
+<ul>
+<li>How general purpose is my application?  Is it trying to edit all rdf data sets or data from a particular domain?  If its general purpose how do we annotate the rdf to make the ui more human friendly?</li>
+<li>How do we bridge the divide between document orientation (where the order of the information should be as given) and the store orientation (where the order is based on internals)?</li>
+<li>How do applications signal the data they expect or are creating?</li>
+</ul>
+
+<p>I believe that we need to adopt some standard way of addressing this as a community.  We cannot afford to introduce a &lsquo;tower of babel&rsquo; for data about our data in addition to all the other data differences.</p>
+
+<p>I will set out some of my own ideas in the coming weeks, but for now I just want to get some discussion going on the topic.</p>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6">
+        
+      </div>
+    </section>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://solid.woburnadvisory.co.uk:8443/" >
+    &copy; 2019 Solid Musings
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>
