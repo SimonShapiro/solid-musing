@@ -6,20 +6,10 @@
     <description>Recent content in Posts on Solid Musings</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 13 Mar 2019 07:51:03 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 11 Mar 2019 07:51:03 +0000</lastBuildDate>
     
 	<atom:link href="https://simonshapiro.github.io/solid-musing/posts/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Using RDF data from other apps - 2</title>
-      <link>https://simonshapiro.github.io/solid-musing/posts/using-rdf-data-2/</link>
-      <pubDate>Wed, 13 Mar 2019 07:51:03 +0000</pubDate>
-      
-      <guid>https://simonshapiro.github.io/solid-musing/posts/using-rdf-data-2/</guid>
-      <description>In the last note, I identified a number of issues or challenges to using rdf. In particular I pointed to three that I plan to experiment with here:
- How to have a general purpose application with a more human friendly UI? How do we bridge the divide between document orientation and the store orientation? How do applications signal the data they expect or are creating?  In order to progress this I have created a &amp;lsquo;test bed&amp;rsquo; using node.</description>
-    </item>
     
     <item>
       <title>Using RDF data from other apps - 1</title>

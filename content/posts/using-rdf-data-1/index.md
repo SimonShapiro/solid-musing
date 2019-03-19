@@ -1,7 +1,7 @@
 ---
 title: "Using RDF data from other apps - 1"
 date: 2019-03-11T07:51:03Z
-draft: true
+draft: false
 ---
 Encouraging widespread use of the solid platform has some challenges.  These range from perceived difficulty of using data in rdf to represent data, to inexperience with the solid server itself.  This article is not a backgrounder on rdf or solid; rather I want to deal with the challenge of using rdf and the re-use of data.
 
