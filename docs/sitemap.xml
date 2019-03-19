@@ -3,17 +3,34 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://solid.woburnadvisory.co.uk:8443/categories/</loc>
+    <loc>https://simonshapiro.github.io/solid-musing/posts/using-rdf-data-2/</loc>
+    <lastmod>2019-03-13T07:51:03+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://simonshapiro.github.io/solid-musing/posts/using-rdf-data-1/</loc>
+    <lastmod>2019-03-11T07:51:03+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://simonshapiro.github.io/solid-musing/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://solid.woburnadvisory.co.uk:8443/</loc>
+    <loc>https://simonshapiro.github.io/solid-musing/posts/</loc>
+    <lastmod>2019-03-13T07:51:03+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://solid.woburnadvisory.co.uk:8443/tags/</loc>
+    <loc>https://simonshapiro.github.io/solid-musing/</loc>
+    <lastmod>2019-03-13T07:51:03+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://simonshapiro.github.io/solid-musing/tags/</loc>
     <priority>0</priority>
   </url>
   

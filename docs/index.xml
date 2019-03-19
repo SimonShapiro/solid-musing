@@ -2,13 +2,34 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Solid Musings</title>
-    <link>https://solid.woburnadvisory.co.uk:8443/</link>
+    <link>https://simonshapiro.github.io/solid-musing/</link>
     <description>Recent content on Solid Musings</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <lastBuildDate>Wed, 13 Mar 2019 07:51:03 +0000</lastBuildDate>
     
-	<atom:link href="https://solid.woburnadvisory.co.uk:8443/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://simonshapiro.github.io/solid-musing/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Using RDF data from other apps - 2</title>
+      <link>https://simonshapiro.github.io/solid-musing/posts/using-rdf-data-2/</link>
+      <pubDate>Wed, 13 Mar 2019 07:51:03 +0000</pubDate>
+      
+      <guid>https://simonshapiro.github.io/solid-musing/posts/using-rdf-data-2/</guid>
+      <description>In the last note, I identified a number of issues or challenges to using rdf. In particular I pointed to three that I plan to experiment with here:
+ How to have a general purpose application with a more human friendly UI? How do we bridge the divide between document orientation and the store orientation? How do applications signal the data they expect or are creating?  In order to progress this I have created a &amp;lsquo;test bed&amp;rsquo; using node.</description>
+    </item>
+    
+    <item>
+      <title>Using RDF data from other apps - 1</title>
+      <link>https://simonshapiro.github.io/solid-musing/posts/using-rdf-data-1/</link>
+      <pubDate>Mon, 11 Mar 2019 07:51:03 +0000</pubDate>
+      
+      <guid>https://simonshapiro.github.io/solid-musing/posts/using-rdf-data-1/</guid>
+      <description>Encouraging widespread use of the solid platform has some challenges. These range from perceived difficulty of using data in rdf to represent data, to inexperience with the solid server itself. This article is not a backgrounder on rdf or solid; rather I want to deal with the challenge of using rdf and the re-use of data.
+While solid&amp;rsquo;s persistence paradigm is document oriented rather than store or &amp;lsquo;database&amp;rsquo; oriented. Using the document is not as easy as &amp;lsquo;file open&amp;rsquo; and &amp;lsquo;file save&amp;rsquo; semantics.</description>
+    </item>
     
   </channel>
 </rss>

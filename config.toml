@@ -1,4 +1,4 @@
-baseURL = "https://solid.woburnadvisory.co.uk:8443/"
+baseURL = "https://simonshapiro.github.io/solid-musing"
 languageCode = "en-us"
 title = "Solid Musings"
 theme = "ananke"
