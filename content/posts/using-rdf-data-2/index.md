@@ -3,7 +3,7 @@ title: "Using RDF data from other apps - 2"
 date: 2019-03-21T17:00:03Z
 draft: false
 ---
-In the [last note](../using-rdf-data-1), I identified a number of issues or challenges to using rdf.  In particular I pointed to three that I plan to experiment with here:
+In the [previous note](../using-rdf-data-1), I identified a number of issues or challenges to using rdf.  In particular I pointed to three that I plan to experiment with here:
 
 - How to have a general purpose application with a more human friendly UI?
 - How do we bridge the divide between document orientation and the store orientation?
