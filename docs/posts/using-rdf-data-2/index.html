@@ -43,7 +43,7 @@
 
 <meta itemprop="datePublished" content="2019-03-13T07:51:03&#43;00:00" />
 <meta itemprop="dateModified" content="2019-03-13T07:51:03&#43;00:00" />
-<meta itemprop="wordCount" content="677">
+<meta itemprop="wordCount" content="962">
 
 
 
@@ -120,52 +120,21 @@
 <li>How do applications signal the data they expect or are creating?</li>
 </ul>
 
-<p>In order to progress this I have created a &lsquo;test bed&rsquo; using node.js.  The &lsquo;test bed&rsquo; consists of the barest minimum lines of code to get data into an rdflibjs store.  Its purpose is to give us the ability to concentrate on the rdf pieces necessary to answer the questions, rather than to build a complete application.</p>
+<p>In order to progress this I have created a &lsquo;test bed&rsquo; using node.js.  The &lsquo;test bed&rsquo; consists of the barest minimum lines of code to get data into an <code>rdflibjs</code> store.  Its purpose is to give us the ability to concentrate on the rdf pieces necessary to answer the questions, rather than to build a complete application.</p>
 
 <h1 id="1-setting-up-the-test-bed">1. Setting up the &lsquo;test bed&rsquo;</h1>
 
-<p>When I am learning something new in technology, I try to de-clutter my thinking as much as possible by starting with very few lines of code that I understand instead of going immediately into a new framework or group of libraries.  In this case, I want to use rdflibjs, but without all the valuable server and security functions of a solid server.  So let&rsquo;s get started.</p>
+<p>When I am learning something new in technology, I try to de-clutter my thinking as much as possible by starting with very few lines of code that I understand instead of going immediately into a new framework or group of libraries.  In this case, I want to use <code>rdflibjs</code>, but without all the valuable server and security functions of a solid server.</p>
 
-<p>I mentioned in the previous article that to me the turtle format was as straightforward as a yaml file. So below is a simple config file written as turtle.</p>
+<p>Also, the sample data has been extracted from a solid app.  This section will only read the data files and will <strong>not</strong> write anything back to solid.  We are trying to isolate our understanding of <code>rdflibjs</code>.  So let&rsquo;s get started.</p>
 
-<pre><code>@prefix : &lt;#&gt; .
-@prefix dc: &lt;http://purl.org/dc/terms/&gt; .
-
-&lt;&gt; a :ConfigFile ;
-    dc:title &quot;A config file&quot; .
-
-:config a :Configuration;
-    :path &quot;/PATH_TO_DATA&quot;;
-    :inputFile &quot;/data/bookmarks.ttl&quot;;
-    :outputFile &quot;/data/results.ttl&quot; .
-</code></pre>
-
-<p>The last four lines are fairly typical in yaml as well.  They set up three values one each for, a <code>path</code>, an <code>inputFile</code> name, and an <code>outputFile</code> name.  We also tie them together under the &lsquo;heading&rsquo; <code>:config</code>.  From here it is necessary to start delving into turtle syntax.</p>
-
-<h2 id="1-1-what-s-in-a-name">1.1 What&rsquo;s in a name?</h2>
-
-<p>Some of the best practices for rdf and turtle are in the <a href="http://linkeddatabook.com/editions/1.0/">linked data book</a>.  In it the authors make the point that a URI can be thought of as the unique <strong>name</strong> of the document.  When this name is resolved by the web, we retrieve a representation of it in turtle format.</p>
-
-<p>So the lines</p>
-
-<pre><code>&lt;&gt; a :ConfigFile ;
-    dc:title &quot;A config file&quot; .
-</code></pre>
-
-<p>are telling us: &ldquo;this document is a configFile with the title &lsquo;A config file&rsquo;&rdquo;.  Also, our understanding of ConfigFile is limited to this document as indicated by <code>:</code>.  Remember, <code>&lt;&gt; a :ConfigFile</code> is turned into</p>
-
-<pre><code>&lt;URI&gt; &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&gt; &lt;URI#ConfigFile&gt;
-</code></pre>
-
-<p>internally, where <code>URI</code> is the location of the document.</p>
-
-<h2 id="1-2-being-server-free">1.2 Being server free</h2>
+<h2 id="1-1-being-server-free">1.1 Being server free</h2>
 
 <p>Earlier I said that we wanted a set-up that had a minimal amount of lines of code and fuss. Also, I want to run this on nodejs rather than a browser.</p>
 
 <p>There were three options for locating this document: on the file system, on the file system with a simple web-server, or on the file system with a solid-server.  I chose the first option for the experiment.</p>
 
-<p>Here is the code that I use to get data into the rdflibjs store:</p>
+<p>Here is the code that I use to get data into the <code>rdflibjs</code> store:</p>
 
 <pre><code>const fetchFromFs = async( fileName ) =&gt; {
     return new Promise ( (resolve, reject ) =&gt; {
@@ -211,6 +180,82 @@ const createStoreFromFile = async (file) =&gt; {
 </code></pre>
 
 <p>These functions should <strong>not</strong> be used in production, they are only here for illustrative purposes.  For production on solid servers you should choses functions provided within the solid ecosystem.  These will help you with authentication, parsing, and error detection.</p>
+
+<h2 id="1-2-using-the-test-bed">1.2 Using the test bed.</h2>
+
+<p>I mentioned in the previous article that to me the turtle format was as straightforward as a yaml file. So below is a simple config file written as turtle.</p>
+
+<pre><code>@prefix : &lt;#&gt; .
+@prefix dc: &lt;http://purl.org/dc/terms/&gt; .
+
+&lt;&gt; a :ConfigFile ;
+    dc:title &quot;A config file&quot; .
+
+:config a :Configuration;
+    :path &quot;/PATH_TO_DATA&quot;;
+    :inputFile &quot;/data/bookmarks.ttl&quot;;
+    :outputFile &quot;/data/results.ttl&quot; .
+</code></pre>
+
+<p>The code below shows how to use the functions to retrieve the <code>inputFile</code> from the config file.</p>
+
+<pre><code>( async () =&gt; {
+    const configFile = &quot;/PATH_TO_DATA/config.ttl&quot;
+    const store2 = await createStoreFromFile(configFile)
+    const CONFIG = $rdf.Namespace(&quot;file://&quot;+configFile+&quot;#&quot;)
+    const path = store2.any(CONFIG(&quot;config&quot;), CONFIG(&quot;path&quot;), undefined, undefined)
+    const inputFile = store2.any(CONFIG(&quot;config&quot;), CONFIG(&quot;inputFile&quot;), undefined, undefined)
+    console.log(path.value+inputFile.value)
+})();
+
+</code></pre>
+
+<h2 id="1-3-what-s-happening">1.3 What&rsquo;s happening?</h2>
+
+<p>The last four lines of the config file are fairly typical in yaml as well.  They set up three values one each for, a <code>path</code>, an <code>inputFile</code> name, and an <code>outputFile</code> name.  We also tie them together under the &lsquo;heading&rsquo; <code>:config</code>.  From here it is necessary to start delving into turtle syntax.</p>
+
+<p>Some of the best practices for rdf and turtle are in the <a href="http://linkeddatabook.com/editions/1.0/">linked data book</a>.  In it the authors make the point that a URI can be thought of as the unique <strong>name</strong> of the document.  When this name is resolved by the web, we retrieve a representation of it in turtle format.</p>
+
+<p>So the lines</p>
+
+<pre><code>&lt;&gt; a :ConfigFile ;
+    dc:title &quot;A config file&quot; .
+</code></pre>
+
+<p>are telling us: &ldquo;this document is a configFile with the title &lsquo;A config file&rsquo;&rdquo;.  Also, our understanding of ConfigFile is limited to this document as indicated by <code>':'</code>.  Remember, <code>&lt;&gt; a :ConfigFile</code> is turned into</p>
+
+<pre><code>&lt;URI&gt; &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&gt; &lt;URI#ConfigFile&gt;
+</code></pre>
+
+<p>internally, where <code>URI</code> is the location of the document.  In this case, because we have chosen to use the file system, the document URI is <code>file:///PATH_TO_DATA/config.ttl</code>.</p>
+
+<p>The line</p>
+
+<pre><code>    const CONFIG = $rdf.Namespace(&quot;file://&quot;+configFile+&quot;#&quot;)
+</code></pre>
+
+<p>simply sets up a short-hand function for the namespace.  It is the <code>rdflibjs</code> equivalent of <code>@prefix</code>.</p>
+
+<p>The store function <code>.any</code> performs pattern matching on the rdf-triple.  Actually, <code>rdflibjs</code>, is a quad store which also has a fourth value (known in the community as <em>why</em>) which usually contains the URI of the original document.</p>
+
+<h1 id="2-summary">2. Summary</h1>
+
+<p>So now we have the basic setup that lets us utilise <code>rdflibjs</code> from <code>nodejs</code> and taking the files from the node file system.</p>
+
+<p>A typical pattern of usage in solid apps is to find a <code>settings</code> file and then use the information there to find the location of rdf data and retrieve it.  Without using the solid libraries and a solid server, we will illustrate this process using our simple setup.</p>
+
+<pre><code>( async () =&gt; {
+    const store2 = await createStoreFromFile(configFile)
+    const CONFIG = $rdf.Namespace(&quot;file://&quot;+configFile+&quot;#&quot;)
+    const path = store2.any(CONFIG(&quot;config&quot;), CONFIG(&quot;path&quot;), undefined, undefined)
+    const inputFile = store2.any(CONFIG(&quot;config&quot;), CONFIG(&quot;inputFile&quot;), undefined, undefined)
+    console.log(path.value+inputFile.value)
+    const bookmarksStore = await createStoreFromFile(path.value+inputFile.value)
+    bookmarksStore.match($rdf.sym(&quot;http://www.w3.org/2002/01/bookmark#Bookmark&quot;),undefined, undefined, undefined).forEach(statement =&gt; {
+        console.log(&quot;s&quot;,statement)
+    })
+})();
+</code></pre>
 <ul class="pa0">
   
 </ul>
