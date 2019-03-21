@@ -6,7 +6,7 @@
     <description>Recent content on Solid Musings</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 13 Mar 2019 07:51:03 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 21 Mar 2019 17:00:03 +0000</lastBuildDate>
     
 	<atom:link href="https://simonshapiro.github.io/solid-musing/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Using RDF data from other apps - 2</title>
       <link>https://simonshapiro.github.io/solid-musing/posts/using-rdf-data-2/</link>
-      <pubDate>Wed, 13 Mar 2019 07:51:03 +0000</pubDate>
+      <pubDate>Thu, 21 Mar 2019 17:00:03 +0000</pubDate>
       
       <guid>https://simonshapiro.github.io/solid-musing/posts/using-rdf-data-2/</guid>
       <description>In the last note, I identified a number of issues or challenges to using rdf. In particular I pointed to three that I plan to experiment with here:
